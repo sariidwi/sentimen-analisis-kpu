@@ -1,0 +1,11 @@
+{% extends "input_manual.html" %}
+{% block content %}
+<!-- Popup Alert -->
+<script>
+    window.onload = function() {
+        alert("Data berhasil disimpan!");
+    };
+</script>
+          <a href="{{ url_for('input_data') }}" class="btn btn-secondary ms-2">Kembali</a>
+</ul>
+{% endblock %}

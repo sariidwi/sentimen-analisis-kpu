@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    
+    <form method="POST">
+        <button type="submit" class="btn btn-primary mb-3">Proses Evaluasi</button>
+    </form>
+
+    {% if metrics %}
+    <h4>Hasil Evaluasi:</h4>
+    <ul>
+        <li><stro  ng>Akurasi:</strong> {{ (metrics.accuracy * 100) | round(2) }}%</li>
+        <li><strong>Precision:</strong> {{ (metrics.precision * 100) | round(2) }}%</li>
+        <li><strong>Recall:</strong> {{ (metrics.recall * 100) | round(2) }}%</li>
+        <li><strong>F1 Score:</strong> {{ (metrics.f1 * 100) | round(2) }}%</li>
+    </ul>
+
+    <h5>Confusion Matrix:</h5>
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th></th>
+                {% for label in metrics.labels %}
+                    <th>{{ label }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in metrics.conf_matrix %}
+            <tr>
+                <th>{{ metrics.labels[loop.index0] }}</th>
+                {% for val in row %}
+                <td>{{ val }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

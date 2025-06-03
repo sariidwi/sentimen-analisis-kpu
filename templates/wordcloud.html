@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-4 text-center">
+  <h2 class="mb-4">Word Cloud Ulasan</h2>
+
+  {% if wordcloud_image %}
+    <img src="data:image/png;base64,{{ wordcloud_image }}" alt="Word Cloud" class="img-fluid rounded shadow">
+  {% else %}
+    <p class="text-muted">Tidak ada data yang tersedia untuk Word Cloud.</p>
+  {% endif %}
+
+</div>
+<div class="d-flex justify-content-center gap-4 mt-5">
+  <a href="{{ url_for('visualisasi') }}" class="btn btn-warning btn-lg shadow transition-hover">
+    <i class="bi bi-cloud-word me-2"></i>Kembali ke Visualisasi
+  </a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "scraping_form.html" %}
+{% block content %}
+<!-- Popup Alert -->
+<script>
+    window.onload = function() {
+        alert("Data berhasil discrap dan disimpan!");
+    };
+</script>
+<button type="submit" class="btn btn-warning">Mulai Scraping</button>
+          <a href="{{ url_for('input_data') }}" class="btn btn-secondary ms-2">Kembali</a>
+</ul>
+{% endblock %}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title or "Sentimen Analisis SIREKAP" }}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1c1c2b;
+      color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .sidebar {
+      min-height: 100vh;
+      background-color: #111;
+      padding: 20px;
+    }
+    .sidebar a {
+      color: #ccc;
+      display: block;
+      padding: 10px;
+      margin-bottom: 5px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background-color: #343a40;
+      color: #ffc107;
+    }
+
+    .content {
+      padding: 30px;
+    }
+    h1, h2, h3 {
+      color: #ffc107;
+    }
+    .btn-warning {
+      background-color: #ffc107;
+      color: #000;
+    }
+    .btn-warning:hover {
+      background-color: #e0a800;
+    }
+
+    .transition-hover {
+  transition: all 0.3s ease;
+}
+
+.transition-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffc107aa;
+}
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-2 sidebar">
+        <h4 class="text-warning mb-4">Menu</h4>
+        <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+        <a href="{{ url_for('input_data') }}" class="{% if request.endpoint in ['manual_input', 'scrape_input'] %}active{% endif %}">Input Data</a>
+        <a href="{{ url_for('preprocessing') }}" class="{% if request.endpoint == 'Preprocessing dan Labeling Data' %}active{% endif %}">Preprocessing dan Labeling</a>
+        <a href="{{ url_for('naive_bayes_info') }}" class="{% if request.endpoint == 'naive_bayes_info' %}active{% endif %}">
+        <i class="bi bi-diagram-3"></i> Naive Bayes
+        </a>
+        <a href="{{ url_for('visualisasi') }}" class="{% if request.endpoint == 'visualisasi' %}active{% endif %}">
+        <i class="bi bi-bar-chart"></i> Visualisasi
+        </a>
+        <a href="{{ url_for('insight') }}" class="{% if request.endpoint == 'insight' %}active{% endif %}">Wawasan</a>
+        <a href="{{ url_for('predict') }}" class="{% if request.endpoint == 'predict' %}active{% endif %}">Prediksi Ulasan</a>
+        <hr class="bg-light">
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="col-md-10 content">
+        
+        <h1>{{ title }}</h1>
+        <hr class="border-warning">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-warning" role="alert">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #111;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+        }
+
+        .sidebar h3 {
+            color: #ffcc00;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            padding: 10px;
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #2a2a3a;
+            color: #ffcc00;
+        }
+
+        .content h1 {
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+    
+        .content p {
+            font-size: 1.05em;
+            margin-bottom: 25px;
+            max-width: 600px;
+        }
+
+        .content blockquote {
+            border-left: 4px solid #ffcc00;
+            background-color: #2a2a3a;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #ddd;
+        }
+
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .auth-buttons {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+        }
+
+        .auth-buttons a {
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #ffcc00;
+            color: #111;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .auth-buttons a:hover {
+            background-color: #e6b800;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <h3>Menu</h3>
+        <ul>
+            <li><a href="{{ url_for('home') }}" class="active">Home</a></li>
+            <li><a href="{{ url_for('input_data') }}" >Input Data</a></li>
+            <li><a href="{{ url_for('insight') }}" >Wawasan</a></li>
+            <li><a href="{{ url_for('index') }}">Prediksi Sentimen</a></li>
+        </ul>
+    </div>
+
+    <!-- Login / Logout Button -->
+    <div class="auth-buttons">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h1>🌐 Selamat Datang di <span class="highlight">Web Analisis Sentimen SIREKAP</span></h1>
+
+        <p><strong>Web Analisis Sentimen SIREKAP</strong> adalah sebuah <span class="highlight">platform berbasis web</span> yang dirancang untuk memantau dan menganalisis opini publik terkait penggunaan Sistem Informasi Rekapitulasi (SIREKAP) dalam proses pemilu di Indonesia.</p>
+
+        <blockquote>
+            Sistem ini secara otomatis mengumpulkan data dari berbagai sumber digital seperti <em>media sosial</em>, <em>portal berita</em>, dan <em>forum diskusi online</em> untuk mengidentifikasi persepsi masyarakat terhadap SIREKAP.
+        </blockquote>
+
+        <p>Melalui teknologi <span class="highlight">Natural Language Processing (NLP)</span> dan <span class="highlight">machine learning</span>, sistem ini mengklasifikasikan sentimen menjadi tiga kategori utama: <strong>positif</strong>, <strong>negatif</strong>, dan <strong>netral</strong>.</p>
+
+        <p>Hasil analisis ditampilkan dalam bentuk visual yang informatif seperti <strong>grafik linimasa</strong>, <strong>peta persebaran wilayah</strong>, serta <strong>daftar topik dan kata kunci</strong> yang paling sering disebutkan.</p>
+
+        <p>Tujuan utama dari web ini adalah untuk memberikan gambaran umum tentang <span class="highlight">tanggapan publik terhadap transparansi dan efektivitas SIREKAP</span> dalam pelaksanaan pemilu, serta menjadi alat bantu <strong>pengambilan keputusan</strong> bagi penyelenggara pemilu, pengamat politik, dan peneliti.</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="text-center">
+  <h2 class="mb-4">Input Data</h2>
+  <p class="lead">Silakan pilih salah satu metode input data berikut:</p>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-4 text-center">
+    <div class="card bg-dark border-warning mb-4">
+      <div class="card-body">
+        <h5 class="card-title text-warning">Input Manual (CSV)</h5>
+        <p class="card-text">Unggah file CSV berisi data ulasan aplikasi SIREKAP secara manual.</p>
+        <a href="{{ url_for('manual_input') }}" class="btn btn-warning">Upload CSV</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 text-center">
+    <div class="card bg-dark border-warning mb-4">
+      <div class="card-body">
+        <h5 class="card-title text-warning">Scraping Play Store</h5>
+        <p class="card-text">Ambil data ulasan terbaru langsung dari Google Play Store secara otomatis.</p>
+        <a href="{{ url_for('scrape_input') }}" class="btn btn-warning">Mulai Scraping</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

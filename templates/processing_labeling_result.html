@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h3>Hasil Preprocessing dan Labeling</h3>
+<table class="table table-bordered table-striped table-dark">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Ulasan Asli</th>
+      <th>Ulasan Preprocessing</th>
+      <th>Label</th>
+      <th>Waktu</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in hasil %}
+  <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ item.original }}</td>
+      <td>{{ item.cleaned }}</td>
+      <td>{{ item.label }}</td>
+      <td>{{ item.timestamp }}</td>  {# Tambahkan ini #}
+  </tr>
+  {% endfor %}
+</tbody>
+
+</table>
+{% endblock %}

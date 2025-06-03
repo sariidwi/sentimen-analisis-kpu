@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  {% if not hasil %}
+    <p>Silahkan klik <span class="text-warning fw-bold">Proses</span> di bawah ini untuk menampilkan hasil preprocessing dan labeling data!</p>
+    <form method="POST">
+      <button type="submit" class="btn btn-warning mt-3">Proses</button>
+    </form>
+  {% else %}
+    <p>Berikut hasil dari preprocessing dan labeling data:</p>
+    <div class="table-responsive mt-4">
+      <table class="table table-dark table-bordered table-striped">
+        <thead class="table-warning text-dark">
+          <tr>
+            <th>#</th>
+            <th>Ulasan Asli</th>
+            <th>Ulasan Preprocessing</th>
+            <th>Label</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in hasil %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item.original }}</td>
+            <td>{{ item.cleaned }}</td>
+            <td>{{ item.label }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endblock %}

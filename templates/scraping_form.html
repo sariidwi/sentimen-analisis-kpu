@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card bg-dark border-warning">
+      <div class="card-body">
+        <h3 class="card-title text-warning mb-4">Scraping Data dari Google Playstore</h3>
+        <form method="POST">
+          <div class="mb-3">
+            <label for="package" class="form-label text-light">Nama Package Aplikasi</label>
+            <input type="text" class="form-control" id="package" name="package" placeholder="Contoh: id.gov.pemilu" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="jumlah" class="form-label text-light">Jumlah Ulasan yang Ingin Diambil</label>
+            <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Contoh: 1000" min="1" max="5000" required>
+          </div>
+
+          <button type="submit" class="btn btn-warning">Mulai Scraping</button>
+          <a href="{{ url_for('input_data') }}" class="btn btn-secondary ms-2">Kembali</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

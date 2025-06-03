@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Visualisasi Data Ulasan</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Distribusi Sumber Ulasan</h5>
+      <canvas id="sourceChart" height="200"></canvas>
+    </div>
+    <div class="col-md-6">
+      <h5>Distribusi Label Sentimen</h5>
+      <canvas id="sentimentChart" height="200"></canvas>
+    </div>
+    
+  <!-- Tombol navigasi interaktif -->
+<div class="d-flex justify-content-center gap-4 mt-5">
+  <a href="{{ url_for('wordcloud') }}" class="btn btn-warning btn-lg shadow transition-hover">
+    <i class="bi bi-cloud-word me-2"></i> WordCloud
+  </a>
+  <a href="{{ url_for('periode') }}" class="btn btn-outline-warning btn-lg shadow transition-hover">
+    <i class="bi bi-calendar-range me-2"></i> Periode
+  </a>
+</div>
+
+
+<!-- Script Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const sourceData = {{ source_data|tojson }};
+  const sentimentData = {{ sentiment_data|tojson }};
+
+  // Chart Sumber Ulasan (Doughnut)
+  new Chart(document.getElementById('sourceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(sourceData),
+      datasets: [{
+        data: Object.values(sourceData),
+        backgroundColor: ['#36a2eb', '#ffcd56', '#4bc0c0', '#9966ff'],
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: {
+            color: '#ffffff', // Warna teks legenda putih
+            font: {
+              size: 14
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Chart Label Sentimen (Bar)
+  new Chart(document.getElementById('sentimentChart'), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(sentimentData),
+      datasets: [{
+        label: 'Jumlah',
+        data: Object.values(sentimentData),
+        backgroundColor: ['#f44336', '#ff9800', '#4caf50'],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#ffffff', // Warna teks legend
+            font: {
+              size: 14
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#ffffff', // Label bawah (x-axis) putih
+            font: {
+              size: 12
+            }
+          }
+        },
+        y: {
+          ticks: {
+            color: '#ffffff', // Angka di sisi kiri (y-axis) putih
+            font: {
+              size: 12
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+
+{% endblock %}
