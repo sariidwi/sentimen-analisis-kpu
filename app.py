@@ -294,7 +294,7 @@ def preprocessing():
             existing = PreprosesData.query.filter_by(ulasan_id=ulasan.id).first()
             if existing:
                 continue
-
+    
             original = ulasan.content
             cleaned = bersihkan_teks(original)
             label = label_ml(original)
