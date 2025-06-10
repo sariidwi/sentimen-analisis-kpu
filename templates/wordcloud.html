@@ -1,6 +1,20 @@
 {% extends 'layout.html' %}
+
 {% block content %}
 <div class="container mt-4 text-center">
+
+  <!-- Notifikasi Flash -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
   <h2 class="mb-4">Word Cloud Ulasan</h2>
 
   {% if wordcloud_image %}
@@ -9,9 +23,11 @@
     <p class="text-muted">Tidak ada data yang tersedia untuk Word Cloud.</p>
   {% endif %}
 
+  <div class="d-flex justify-content-center gap-4 mt-5">
+    <a href="{{ url_for('visualisasi') }}" class="btn btn-warning btn-lg shadow transition-hover">
+      <i class="bi bi-cloud-word me-2"></i>Kembali ke Visualisasi
+    </a>
+  </div>
+
 </div>
-<div class="d-flex justify-content-center gap-4 mt-5">
-  <a href="{{ url_for('visualisasi') }}" class="btn btn-warning btn-lg shadow transition-hover">
-    <i class="bi bi-cloud-word me-2"></i>Kembali ke Visualisasi
-  </a>
 {% endblock %}

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-from google_play_scraper import reviews, Sort
+from google_play_scraper import reviews, Sort, app as get_app_detail
 from datetime import datetime
 import pickle
 import csv
@@ -133,6 +133,20 @@ def home():
 def input_data():
     return render_template('input_data.html', title="Input Data")
 
+@app.route('/hapus_data', methods=['POST'])
+@login_required
+def hapus_data():
+    try:
+        # Hapus dulu data anak (PreprosesData)
+        db.session.query(PreprosesData).delete()
+        db.session.query(Ulasan).delete()
+        db.session.commit()
+        flash('Semua data berhasil dihapus.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Gagal menghapus data: {str(e)}', 'danger')
+    return redirect(url_for('input_data'))
+
 # --- Manual Input CSV ---
 @app.route('/input-manual', methods=['GET', 'POST'])
 @login_required
@@ -197,7 +211,13 @@ def scrape_input():
         if not package.strip():
             flash("Package ID tidak boleh kosong.")
             return redirect(request.url)
-
+# Cek apakah package ID valid
+        try:
+            get_app_detail(package)
+        except Exception:
+            flash("Aplikasi tidak ditemukan di Play Store. Pastikan package ID benar.", 'danger')
+            return redirect(request.url)
+        #lanjut scraping
         result, _ = reviews(
             package,
             lang='id',
@@ -231,7 +251,7 @@ def scrape_input():
 @app.route('/insight')
 @login_required
 def insight():
-    return render_template('insight.html', title="Insight")
+    return render_template('insight.html', title="Wawasan")
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
@@ -386,9 +406,14 @@ def wordcloud():
     data = db.session.query(PreprosesData.cleaned).all()
     all_text = ' '.join([row[0] for row in data if row[0]])
 
+# Jika data kosong, tampilkan notifikasi
+    if not data or all(not row[0] for row in data):
+        flash("Tidak ada data yang tersedia untuk Word Cloud.", "warning")
+        return redirect(url_for('visualisasi'))
     # Buat WordCloud
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_text)
-
+# Gabungkan semua teks
+    all_text = ' '.join([row[0] for row in data if row[0]])
     # Simpan gambar ke buffer
     img = io.BytesIO()
     plt.figure(figsize=(10, 5))
