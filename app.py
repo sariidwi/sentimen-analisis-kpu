@@ -135,7 +135,7 @@ def home():
 @app.route('/input-data')
 @login_required
 def input_data():
-    return render_template('input_data.html', title="Input Data")
+    return render_template('Input_data.html', title="Input Data")
 
 @app.route('/hapus_data', methods=['POST'])
 @login_required
