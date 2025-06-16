@@ -302,7 +302,7 @@ def scrape_input():
                     'content': content,
                     'timestamp': at.strftime("%d-%m-%Y %H:%M")
                 })
-
+                
                 saved_count += 1
 
         db.session.commit()
