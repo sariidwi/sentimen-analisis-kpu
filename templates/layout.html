@@ -4,19 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title or "Sentimen Analisis SIREKAP" }}</title>
+
+  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- AOS (Animate On Scroll) CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Custom Style -->
   <style>
     body {
       background-color: #1c1c2b;
       color: #f8f9fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
     .sidebar {
       min-height: 100vh;
       background-color: #111;
       padding: 20px;
     }
+
     .sidebar a {
       color: #ccc;
       display: block;
@@ -25,7 +36,9 @@
       text-decoration: none;
       border-radius: 4px;
     }
-    .sidebar a.active, .sidebar a:hover {
+
+    .sidebar a.active,
+    .sidebar a:hover {
       background-color: #343a40;
       color: #ffc107;
     }
@@ -33,25 +46,28 @@
     .content {
       padding: 30px;
     }
+
     h1, h2, h3 {
       color: #ffc107;
     }
+
     .btn-warning {
       background-color: #ffc107;
       color: #000;
     }
+
     .btn-warning:hover {
       background-color: #e0a800;
     }
 
     .transition-hover {
-  transition: all 0.3s ease;
-}
+      transition: all 0.3s ease;
+    }
 
-.transition-hover:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px #ffc107aa;
-}
+    .transition-hover:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ffc107aa;
+    }
   </style>
 </head>
 <body>
@@ -64,10 +80,10 @@
         <a href="{{ url_for('input_data') }}" class="{% if request.endpoint in ['manual_input', 'scrape_input'] %}active{% endif %}">Input Data</a>
         <a href="{{ url_for('preprocessing') }}" class="{% if request.endpoint == 'Preprocessing dan Labeling Data' %}active{% endif %}">Preprocessing dan Labeling</a>
         <a href="{{ url_for('naive_bayes_info') }}" class="{% if request.endpoint == 'naive_bayes_info' %}active{% endif %}">
-        <i class="bi bi-diagram-3"></i> Naive Bayes
+          <i class="bi bi-diagram-3"></i> Naive Bayes
         </a>
         <a href="{{ url_for('visualisasi') }}" class="{% if request.endpoint == 'visualisasi' %}active{% endif %}">
-        <i class="bi bi-bar-chart"></i> Visualisasi
+          <i class="bi bi-bar-chart"></i> Visualisasi
         </a>
         <a href="{{ url_for('insight') }}" class="{% if request.endpoint == 'insight' %}active{% endif %}">Wawasan</a>
         <a href="{{ url_for('predict') }}" class="{% if request.endpoint == 'predict' %}active{% endif %}">Prediksi Ulasan</a>
@@ -77,21 +93,48 @@
 
       <!-- Main Content -->
       <main class="col-md-10 content">
-        
+        <!-- Judul Halaman -->
         <h1>{{ title }}</h1>
         <hr class="border-warning">
-        {% with messages = get_flashed_messages() %}
+
+        <!-- Flash Message -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
-            <div class="alert alert-warning" role="alert">
-              {{ messages[0] }}
+            <div class="container mt-3">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
             </div>
           {% endif %}
         {% endwith %}
+
+        <!-- Konten Halaman -->
         {% block content %}{% endblock %}
       </main>
     </div>
   </div>
 
+  <!-- Bootstrap JS Bundle (termasuk Popper) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script untuk menghapus flash message setelah beberapa detik -->
+  <script>
+    setTimeout(function() {
+      const flashMessages = document.querySelectorAll('.alert');
+      flashMessages.forEach(function(el) {
+        el.classList.add('fade');
+        setTimeout(() => el.remove(), 500); // Setelah fade out
+      });
+    }, 30000); // 30 detik
+  </script>
+
+  <!-- AOS JS (setelah semua elemen dimuat) -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init(); // Inisialisasi AOS
+  </script>
 </body>
 </html>

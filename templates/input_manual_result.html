@@ -1,11 +1,29 @@
-{% extends "input_manual.html" %}
+{% extends 'layout.html' %}
 {% block content %}
-<!-- Popup Alert -->
-<script>
-    window.onload = function() {
-        alert("Data berhasil disimpan!");
-    };
-</script>
-          <a href="{{ url_for('input_data') }}" class="btn btn-secondary ms-2">Kembali</a>
-</ul>
+<div class="container mt-4">
+    <h3>{{ title }}</h3>
+    {% if comments %}
+    <table class="table table-dark table-striped mt-3">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Ulasan</th>
+                <th>Tanggal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ comment.content }}</td>
+                <td>{{ comment.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Tidak ada ulasan baru yang berhasil diambil.</p>
+    {% endif %}
+</div>
+<a href="{{ url_for('manual_input') }}" class="btn btn-secondary ms-2">Kembali</a>
 {% endblock %}

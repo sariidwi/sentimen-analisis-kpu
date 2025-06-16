@@ -1,24 +1,24 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="text-center">
+<div class="text-center" data-aos="fade-down">
   <h2 class="mb-4">Selamat Datang di Aplikasi Analisis Sentimen SIREKAP</h2>
   <p class="lead">
     Aplikasi ini dirancang untuk membantu Anda menganalisis sentimen dari ulasan pengguna aplikasi SIREKAP.
-    Anda dapat melakukan input data, preprocessing, klasifikasi, visualisasi hasil, hingga melihat wawasan dari data yang tersedia.
+    Anda dapat melakukan input data, preprocessing, klasifikasi, visualisasi hasil, hingga melihat wawasan dari analisis sentimen.
   </p>
   <hr class="border-light my-4">
+</div>
 
-  <div class="row justify-content-center">
-    <div class="col-md-3 mb-3">
-      <a href="{{ url_for('input_data') }}" class="btn btn-warning w-100">Input Data</a>
-    </div>
-    <div class="col-md-3 mb-3">
-      <a href="{{ url_for('preprocessing') }}" class="btn btn-warning w-100">Preprocessing_labeling</a>
-    </div>
-    <div class="col-md-3 mb-3">
-      <a href="{{ url_for('predict') }}" class="btn btn-warning w-100">Prediksi Ulasan</a>
-    </div>
+<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+  <div class="col-md-3 mb-3">
+    <a href="{{ url_for('input_data') }}" class="btn btn-warning w-100 transition-hover">Input Data</a>
+  </div>
+  <div class="col-md-3 mb-3">
+    <a href="{{ url_for('preprocessing') }}" class="btn btn-warning w-100 transition-hover">Preprocessing & Labeling</a>
+  </div>
+  <div class="col-md-3 mb-3">
+    <a href="{{ url_for('predict') }}" class="btn btn-warning w-100 transition-hover">Prediksi Ulasan</a>
   </div>
 </div>
 {% endblock %}
