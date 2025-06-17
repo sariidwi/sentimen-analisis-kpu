@@ -362,7 +362,7 @@ stopwords_indonesia = set([
     "oke", "sip", "yaudah", "okey", "yok", "ayo", "ayok", "iyaa", "iya", "no", "yes", "thanks",
     "test", "coba", "tes", "uh", "uhm", "hmm", "kenapa", "tapi", "bahkan", "mungkin", "entah", "kalau", 
     "tp", "klo", "karna", "bbrpa", "urusanmu", "jadi", "juga", "mah", "aja",  "seperti", "masih", 
-    "pada", "mau", "mana", "lamuuuuu", "hehehe", "eh", " ", "kayak", "kaya", "lah"
+    "pada", "mau", "mana", "lamuuuuu", "hehehe", "eh", " ", "kayak", "kaya", "lah",
      "klo", "ky", "gw", "aja", "gini", "gk", "ga", "g", "ny", "mah", "ne", "donwlod",
     "dong", "loh", "lah", "wah", "aja", "nih", "deh", "yok", "josss", "🤣", "😅", "😭", "wak",
     "🙏", "✌️", "😝", "🔥", "😋", "ampas", "konttoll", "rungkad", "jelekk", "gbk", "sialan", 
