@@ -78,6 +78,14 @@ with open(model_path, 'rb') as model_file:
 with open(vectorizer_path, 'rb') as vec_file:
     vectorizer = pickle.load(vec_file)
 
+# Pemisahan data pelabelan untk teks mentah danteks yang sudah bersih
+def label_ml_cleaned(teks_bersih):
+    if model is None or vectorizer is None:
+        raise ValueError("Model atau vectorizer belum dimuat.")
+    if not teks_bersih.strip():
+        return 'Netral'
+    vektor = vectorizer.transform([teks_bersih])
+    return model.predict(vektor)[0]
 
 
 # --- Login Config ---
@@ -527,7 +535,7 @@ def preprocessing():
             data_baru_ditemukan = True
             original = ulasan.content
             cleaned = bersihkan_teks(original)
-            label = label_ml(original)
+            label = label_ml_cleaned(cleaned)
 
             data = PreprosesData(
                 ulasan_id=ulasan.id,
@@ -611,11 +619,11 @@ def naive_bayes_info():
             flash("Belum ada data untuk diproses.")
             return redirect(request.url)
 
-        texts = [d.cleaned for d in data]
-        true_labels = [d.label for d in data]
 
         # Preprocessing + Vectorizing
-        cleaned_texts = [bersihkan_teks(t) for t in texts]
+        cleaned_texts = [d.cleaned for d in data]
+        true_labels = [d.label for d in data]
+        
         X_test = vectorizer.transform(cleaned_texts)
         y_pred = model.predict(X_test)
 
@@ -640,7 +648,7 @@ def visualisasi():
     all_ulasan = Ulasan.query.all()
     for ulasan in all_ulasan:
         cleaned = bersihkan_teks(ulasan.content)
-        label = label_ml(cleaned)  # pakai model ML
+        label = label_ml_cleaned(cleaned) # pakai model ML
         sentiment_counter[label] += 1
 
     return render_template('Visualisasi.html', title="Visualisasi", source_data=source_dict, sentiment_data=sentiment_counter)
