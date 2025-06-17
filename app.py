@@ -371,7 +371,7 @@ stopwords_indonesia = set([
     "durung", "nek", "kok", "tok", "aja", "lagi", "gitu", "begitu", "gimana", "kayak",
     "seperti", "udah", "nggak", "ngga", "banget", "cuman", "cumann", "aja", "kayanya", "masak", "kaya", "kayak", "gitu", "dek", "donk",
     "ga", "gk", "g", "gajelas", "gw", "loh", "mah", "nih", "wkwk", "wkwkwk", "hmm",
-    "yah", "wkwkw", "deh", "padahal", "ok", "oke", "okey", "sensor"
+    "yah", "wkwkw", "deh", "padahal", "ok", "oke", "okey", "sensor",
     "banget", "bikin", "masih", "blm", "udah", "dlu", "dulu", "aja", "siang", "malem",
     "malam", "ny", "jgn", "aja", "lagi", "terimakasih", "biar", "jika", "trus", "yang", 
     "bahkan", "sampai", "sudah", "karna", "karena", "klo", "klw", "klu", "bgt", "bikin", "lakon opo to yooo yooo....",
