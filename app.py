@@ -212,7 +212,9 @@ def manual_input():
                     })
 
             db.session.commit()
-
+            
+            flash(f"{len(comments)} data ulasan berhasil disimpan.", 'success')
+            
             return render_template(
                 'input_manual_result.html',  # Gunakan template yang sama
                 comments=comments,
@@ -314,7 +316,8 @@ def scrape_input():
                 saved_count += 1
 
         db.session.commit()
-
+        
+        flash(f"{len(comments)} data ulasan berhasil disimpan.", 'success')
         if not comments:
             flash("Tidak ada ulasan baru yang berhasil diambil.", "warning")
 
@@ -421,7 +424,7 @@ norm = {
     "ya": "iya", "yah": "ya", "gimna": "bagaimana", "gini": "begini", "pas": "saat", 
     "blok": "goblok", "eror": "error", "jeblug": "error", "pake": "pakai", "nggo": "pakai",
     "org": "orang", "mntp": "mantap", "tdk": "tidak", "good": "baik", "good game": "permainan baik",
-    "unuius wenda": "kerja bagus", "sangat luar biasa": "sangat bagus sekali",
+    "unuius wenda": "kerja bagus", "sangat luar biasa": "sangat bagus sekali", "baget": "banget",
     "rasah": "tidak perlu", "ungah": "unggah", "steady": "stabil", "testo": "percobaan mantab",
     "kntol": "jelek", "tolol": "tidak berguna", "kureng": "kurang", "binhung": "bingung", "bingung": "bingung",
     "fast": "cepat", "bangetttt": "banget", "bgt": "banget", "rame": "ramai", 

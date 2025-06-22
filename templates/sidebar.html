@@ -1,0 +1,17 @@
+<!-- sidebar.html -->
+<nav class="col-md-2 sidebar">
+  <h4 class="text-warning mb-4">Menu</h4>
+  <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+  <a href="{{ url_for('input_data') }}" class="{% if request.endpoint in ['manual_input', 'scrape_input'] %}active{% endif %}">Input Data</a>
+  <a href="{{ url_for('preprocessing') }}" class="{% if request.endpoint == 'preprocessing' %}active{% endif %}">Preprocessing dan Labeling</a>
+  <a href="{{ url_for('naive_bayes_info') }}" class="{% if request.endpoint == 'naive_bayes_info' %}active{% endif %}">
+    <i class="bi bi-diagram-3"></i> Naive Bayes
+  </a>
+  <a href="{{ url_for('visualisasi') }}" class="{% if request.endpoint == 'visualisasi' %}active{% endif %}">
+    <i class="bi bi-bar-chart"></i> Visualisasi
+  </a>
+  <a href="{{ url_for('insight') }}" class="{% if request.endpoint == 'insight' %}active{% endif %}">Wawasan</a>
+  <a href="{{ url_for('predict') }}" class="{% if request.endpoint == 'predict' %}active{% endif %}">Prediksi Ulasan</a>
+  <hr class="bg-light">
+  <a href="{{ url_for('logout') }}">Logout</a>
+</nav>
