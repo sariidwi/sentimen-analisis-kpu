@@ -693,35 +693,53 @@ def wordcloud():
 
     return render_template('wordcloud.html', title="Word Cloud", wordcloud_image=img_base64)
 
-# --- Periode --- 
+# --- Periode ---
 @app.route('/periode')
 @login_required
 def periode():
-    # Ambil seluruh timestamp dari tabel Ulasan
-    rows = db.session.query(Ulasan.timestamp).filter(Ulasan.timestamp != None).all()
-    df = pd.DataFrame(rows, columns=['timestamp'])
+    # Ambil timestamp dari Ulasan dan label dari PreprosesData dengan JOIN
+    rows = db.session.query(Ulasan.timestamp, PreprosesData.label)\
+        .join(PreprosesData, PreprosesData.ulasan_id == Ulasan.id)\
+        .filter(Ulasan.timestamp != None).all()
+
+    # Konversi ke DataFrame
+    df = pd.DataFrame(rows, columns=['timestamp', 'label'])
+
+    # Cek apakah data tersedia
     if df.empty:
-        flash("Belum ada data ulasan untuk divisualisasikan.", "warning")
+        flash("Belum ada data ulasan yang bisa divisualisasikan.", "warning")
         return redirect(url_for('visualisasi'))
 
-    # Pastikan tipe datetime dan buat kolom 'tanggal'
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
-    df['tanggal'] = df['timestamp'].dt.date
+    # Buat kolom tanggal (tanpa jam)
+    df['tanggal'] = pd.to_datetime(df['timestamp']).dt.date
 
-    # Hitung jumlah ulasan per hari
-    per_hari = df.groupby('tanggal').size().reset_index(name='jumlah')
+    # Hitung jumlah ulasan per tanggal dan label
+    daily_counts = df.groupby(['tanggal', 'label']).size().unstack(fill_value=0)
 
-    # Buat grafik line chart
-    plt.figure(figsize=(10, 5))
-    plt.plot(per_hari['tanggal'], per_hari['jumlah'], marker='o')
-    plt.title('Jumlah Ulasan Per Hari')
+    # Plot line chart per kategori sentimen
+    plt.figure(figsize=(12, 6))
+    # Mapping label ke warna
+    warna_sentimen = {
+    'Negatif': 'red',
+    'Netral': 'orange',
+    'Positif': 'green'
+    }
+
+# Plot tiap sentimen dengan warna sesuai
+    for label in daily_counts.columns:
+        plt.plot(daily_counts.index, daily_counts[label], marker='o',
+             label=label.capitalize(),
+             color=warna_sentimen.get(label, 'blue'))  # default ke biru jika label tidak dikenal
+
+    plt.title('Jumlah Ulasan per Hari berdasarkan Sentimen')
     plt.xlabel('Tanggal')
     plt.ylabel('Jumlah Ulasan')
     plt.xticks(rotation=45)
+    plt.legend(title="Sentimen")
     plt.grid(True)
     plt.tight_layout()
 
-    # Konversi grafik ke gambar base64
+    # Simpan grafik ke format base64
     buf = io.BytesIO()
     plt.savefig(buf, format='png')
     buf.seek(0)
@@ -730,6 +748,7 @@ def periode():
     plt.close()
 
     # Kirim ke template
+    
     return render_template('periode.html', title="Periode", plot_url=img_b64)
 
 
