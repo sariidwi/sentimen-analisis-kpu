@@ -2,15 +2,39 @@
 
 {% block content %}
 <div class="text-center" data-aos="fade-down">
-  <h2 class="mb-4">Selamat Datang di Aplikasi Analisis Sentimen SIREKAP</h2>
-  <p class="lead">
-    Aplikasi ini dirancang untuk membantu Anda menganalisis sentimen dari ulasan pengguna aplikasi SIREKAP.
-    Anda dapat melakukan input data, preprocessing, klasifikasi, visualisasi hasil, hingga melihat wawasan dari analisis sentimen.
-  </p>
+  <h2 class="mb-4"><i class="bi bi-bar-chart-line-fill me-2"></i>Selamat Datang di Aplikasi Analisis Sentimen SIREKAP</h2>
+  <div class="mx-auto" style="max-width: 900px;">
+    <p class="lead">
+      Aplikasi ini dirancang untuk membantu Anda menganalisis sentimen dari ulasan pengguna aplikasi SIREKAP.
+      Anda dapat melakukan input data, preprocessing, klasifikasi, visualisasi hasil, hingga melihat wawasan dari analisis sentimen.
+    </p>
+  </div>
   <hr class="border-light my-4">
 </div>
 
-<div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+<div class="container mb-5" data-aos="fade-up" data-aos-delay="100">
+  <div class="mx-auto" style="max-width: 900px;">
+    <h4 class="text-center mb-3">Tentang SIREKAP</h4>
+    <p class="text-justify">
+      SIREKAP (Sistem Informasi Rekapitulasi) adalah aplikasi resmi dari Komisi Pemilihan Umum (KPU) Republik Indonesia yang digunakan untuk merekap hasil suara secara digital selama proses pemilu.
+      Seiring meningkatnya pengguna, banyak masukan dan ulasan yang diberikan masyarakat melalui platform seperti Google Play Store.
+      Melalui analisis sentimen, aplikasi ini bertujuan memahami persepsi dan kepuasan masyarakat terhadap penggunaan SIREKAP.
+    </p>
+  </div>
+</div>
+
+<div class="container mb-5" data-aos="fade-up" data-aos-delay="150">
+  <div class="mx-auto" style="max-width: 900px;">
+    <h4 class="text-center mb-3">Mengapa Analisis Sentimen Penting?</h4>
+    <p class="text-justify">
+      Analisis sentimen memberikan gambaran umum tentang bagaimana respon masyarakat terhadap aplikasi, termasuk kekuatan dan kelemahannya.
+      Informasi ini sangat berguna untuk evaluasi, pengambilan keputusan, serta peningkatan kualitas layanan ke depannya.
+      Selain itu, hasil analisis juga dapat digunakan sebagai dasar perbaikan teknis dan peningkatan fitur aplikasi.
+    </p>
+  </div>
+</div>
+
+<div class="row justify-content-center mt-4" data-aos="fade-up" data-aos-delay="200">
   <div class="col-md-3 mb-3">
     <a href="{{ url_for('input_data') }}" class="btn btn-warning w-100 transition-hover">Input Data</a>
   </div>
@@ -21,4 +45,5 @@
     <a href="{{ url_for('predict') }}" class="btn btn-warning w-100 transition-hover">Prediksi Ulasan</a>
   </div>
 </div>
+
 {% endblock %}

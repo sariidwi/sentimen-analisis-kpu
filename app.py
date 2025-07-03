@@ -68,7 +68,7 @@ class PreprosesData(db.Model):
 with app.app_context():
     db.create_all()
 
-# --- Load Model ML ---
+# --- Load Model yang sudah di latih ---
 model_path = os.path.join(os.path.dirname(__file__), 'MODELFIX', 'model_final_gabungan.pkl')
 vectorizer_path = os.path.join(os.path.dirname(__file__), 'MODELFIX', 'vectorizer_final.pkl')
 
@@ -137,7 +137,7 @@ def logout():
 @app.route('/home')
 @login_required
 def home():
-    return render_template('home.html', title="Beranda")
+    return render_template('home.html', title="Home")
 
 # --- Input Data Page (menu utama) ---
 @app.route('/input-data')
