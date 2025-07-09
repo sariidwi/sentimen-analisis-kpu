@@ -358,7 +358,7 @@ def predict():
 
 # Contoh fungsi preprocessing (bisa Anda sesuaikan lebih lanjut)
 import re
-import re
+
 
 # === STOPWORDS INDONESIA (UNIK & BERSIH) ===
 stopwords_indonesia = set([

@@ -8,7 +8,8 @@
         <h3 class="card-title text-warning mb-3">🧠 Prediksi Sentimen Ulasan</h3>
         <p class="text-light">
           Masukkan komentar atau ulasan yang ingin Anda analisis sentimennya.<br>
-          Sistem akan memberikan label sentimen: <span class="text-warning fw-bold">Positif</span>, 
+          Sistem akan memberikan label sentimen: 
+          <span class="text-warning fw-bold">Positif</span>, 
           <span class="text-warning fw-bold">Netral</span>, atau 
           <span class="text-warning fw-bold">Negatif</span>.
         </p>
@@ -16,7 +17,15 @@
         <form method="POST">
           <div class="mb-3">
             <label for="ulasan" class="form-label text-light">Masukkan Ulasan</label>
-            <textarea class="form-control" name="ulasan" id="ulasan" rows="4" required>{{ review }}</textarea>
+            <textarea 
+              class="form-control" 
+              name="ulasan" 
+              id="ulasan" 
+              rows="5" 
+              required 
+              maxlength="1500"
+              placeholder="Tulis ulasan Anda (maksimal 1500 karakter)">{{ review }}</textarea>
+            <small class="form-text text-muted">Maksimal 1000 karakter.</small>
           </div>
           <button type="submit" class="btn btn-warning">Prediksi Sentimen</button>
         </form>
@@ -27,7 +36,7 @@
           <p class="fs-5" style="color: navy;"><strong>{{ sentiment }}</strong></p>
         </div>
         {% endif %}
-        
+
       </div>
     </div>
   </div>
