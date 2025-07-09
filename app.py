@@ -358,19 +358,29 @@ def predict():
 
 # Contoh fungsi preprocessing (bisa Anda sesuaikan lebih lanjut)
 import re
+import re
 
-# === 1. Stopwords Indonesia (bebas duplikat) ===
+# === STOPWORDS INDONESIA (UNIK & BERSIH) ===
 stopwords_indonesia = set([
-    "yang", "dan", "di", "ke", "dari", "untuk", "dengan", "pada", "adalah", "ini", "itu",
+    "yang", "yg", "v", "aelah", "kon", "dan", "di", "ke", "dari", "untuk", "dengan", "pada", "adalah", "ini", "itu",
     "sudah", "akan", "telah", "karena", "jika", "seperti", "agar", "atau", "oleh", "dalam",
-    "saat", "kami", "kita", "mereka", "saya", "anda", "dia", "hanya", "bukan", "ya",
-    "lagi", "lah", "pun", "apa", "berapa", "siapa", "mengapa", "bagaimana", "semua", "setiap",
-    "keluar", "klik", "tersebut", "saja", "nya", "terjadi", "sehingga", "baru", "lebih",
-    "harus", "yg", "aku", "gue", "ku", "mu", "nih", "deh", "kok", "dong", "udah", "nggak",
-    "ngga", "banget", "gitu", "ntar", "gak", "tuh", "si", "eh", "makanya", "malah", "toh",
-    "ntah", "yah", "oh", "wkwk", "wkwkwk", "haha", "huhu", "hehe", "hadeh", "astaga", "waduh",
-    "loh", "aduh", "ampun", "maaf", "tolong", "please", "makasih", "terima", "kasih", "ok",
-    "oke", "sip", "yaudah", "okey", "yok", "ayo", "ayok", "iyaa", "iya", "no", "yes", "thanks",
+    "saat", "kami", "kita", "mereka", "saya", "anda", "dia", "hanya", "bukan", "ya", "lagi",
+    "pun", "apa", "berapa", "siapa", "mengapa", "bagaimana", "semua", "setiap", "saja",
+    "nya", "terjadi", "sehingga", "baru", "lebih", "harus", "aku", "gue", "ku", "mu", "nih",
+    "deh", "kok", "dong", "udah", "terus", "nggak", "ngga", "banget", "gitu", "ntar", "gak", "tuh",
+    "si", "eh", "makanya", "malah", "toh", "yah", "oh", "wkwk", "wkwkwk", "haha", "huhu",
+    "hehe", "hadeh", "astaga", "waduh", "loh", "aduh", "ampun", "maaf", "tolong", "please",
+    "makasih", "terima", "kasih", "ok", "oke", "sip", "yaudah", "okey", "yok", "ayo", "ayok",
+    "iyaa", "iya", "no", "yes", "thanks", "test", "coba", "tes", "uh", "uhm", "hmm", "tp",
+    "klo", "kl", "bgt", "mah", "aja", "kayak", "kaya", "jd", "g", "ga", "gk", "gw", "ny", "sy",
+    "lg", "nya", "lah", "ne", "donk", "😅", "😭", "🤣", "🙏", "✌️", "😝", "😋", "🔥", "anjay",
+    "anjrit", "aslii", "buosokkk", "rungkad", "konttoll", "ampas", "sialan", "gajelas", 
+    "nyusahin", "nyusahke", "rausah", "durung", "nek", "tok", "begitu", "dek", "dong", 
+    "cumann", "samsek", "ora", "mutu", "gausah", "serius", "iyaa", "masyaallah", "berkalikali",
+    "buramlog", "bohhh", "asal", "jadi", "lemoot", "burammm", "capek2", "uploadnya", "gagalmaning",
+    "bagua", "burul", "burukkkkkkkkkk", "waduh", "jelekk", "gue", "kek", "cek", "kontak", "boskuini",
+    "piye", "lah", "lho", "sih", "sampe", "dong", "wkwkw", "ampasss", "wak", "iqba", "gimana",
+    'anjir', 'dah', 'dan', 'dari', 'di', 'dong', 'emang', 'ke', 'lahhh', 'mantul', "ngent",
     "test", "coba", "tes", "uh", "uhm", "hmm", "kenapa", "tapi", "bahkan", "mungkin", "entah", "kalau", 
     "tp", "klo", "karna", "bbrpa", "urusanmu", "jadi", "juga", "mah", "aja",  "seperti", "masih", 
     "pada", "mau", "mana", "lamuuuuu", "hehehe", "eh", " ", "kayak", "kaya", "lah",
@@ -408,18 +418,35 @@ stopwords_indonesia = set([
     "tenaga", "beusaha", "siangmalam", "subu", "kenap", "sya", "masi", "persi", "boskuini", 
     "kayaknya", "playstore", "255", "halo", "amana", "barat", "bisamalah", "apaa", "la", 
     "tidor", "v23", "5g", "bersedia", "ttp", "z", "useless", "ijinkan", "iphone", "drmana", 
-    "asalnya", "kompeten", "lu", "kabarin", "dehh", "mntap", "glk", "hdeh", "ssu", "maghrib", 
-    "jejeni", "njirlah", "leleeeeeeeeeet", "petot", "sa", "gj", "bluk"
+    "orang", "kali", "jejeni", "njirlah", "leleeeeeeeeeet", "petot", "sa", "gj", "bluk", "hadeuwhhhhhhhh", "alang" "kesaronyooooooo",
 ])
 
-# === 2. Kamus Normalisasi (bebas duplikat dan konsisten) ===
+# === KAMUS NORMALISASI ===
 norm = {
-    "apk": "aplikasi", "apl": "aplikasi", "apknya": "aplikasinya", "aplikasinya": "aplikasi",
-    "ap": "apa", "yg": "yang", "skrg": "sekarang", "gak": "tidak", "gk": "tidak", "ga": "tidak", "ngga": "tidak", 
-    "ngak": "tidak", "tp": "tapi", "g": "tidak", "gx": "tidak", "gajelas": "tidak jelas", "nggak": "tidak",
-    "klo": "kalau", "klw": "kalau", "klu": "kalau", "kok": "mengapa", "jgn": "jangan", "dr": "dari", 
-    "utk": "untuk", "dgn": "dengan", "sndri": "sendiri", "aja": "saja", "doang": "saja", 
-    "buat": "untuk", "bikin": "membuat", "udah": "sudah", "udh": "sudah", "uda": "sudah", 
+    "Baguss" : "baik", "Bsik": "baik", "bsik": "baik", "apk": "aplikasi", "apknya": "aplikasi", "aplikasinya": "aplikasi", "gak": "tidak", "Kren": "keren", "kren": "keren",
+    "gk": "tidak", "ga": "tidak", "ngga": "tidak", "tp": "tapi", "g": "tidak", "gda": "tidak ada", "krmajuan": "kemajuan", "gilo": "jijik",
+    "gx": "tidak", "gajelas": "tidak jelas", "jgn": "jangan", "dr": "dari", "Mantob": "mantab", "mantob": "mantab", "konbnayak": "kok banyak",
+    "utk": "untuk", "dgn": "dengan", "sndri": "sendiri", "doang": "saja", "bgus": "bagus", "gg": "tdak", "all": "semua",
+    "buat": "untuk", "bikin": "membuat", "udah": "sudah", "udh": "sudah", "suliiitttt": "sulit",
+    "uda": "sudah", "jeleeeek": "jelek", "burukkk": "buruk", "tolong": "mohon", "blum": "belum",
+    "ya": "iya", "yah": "iya", "pas": "saat", "eror": "error", "pake": "pakai",
+    "org": "orang", "mntp": "mantap", "tdk": "tidak", "good": "baik", 
+    "baget": "banget", "rasah": "tidak perlu", "ungah": "unggah", 
+    "suka": "sering", "dimanual": "manual", "ra": "tidak", "trus": "terus",
+    "trs": "terus", "blm": "belum", "tdk": "tidak", "rumit": "ribet",
+    "lemottt": "lemot", "susah": "sulit", "nyusahi": "menyusahkan",
+    "rausah": "tidak usah", "ampasss": "tidak berguna", "nyusahke": "menyusahkan",
+    "ngelagg": "ngelag", "ngelegggggggggg": "ngelag", "bagua": "bagus", 
+    "burul": "buruk", "rungkad": "gagal", "rungkat": "gagal", "rungkatttt": "gagal",
+    "masyaallah": "", "buramlog": "buram", "lemoot": "lemot", "lemottt": "lemot",
+    "buduk": "buruk", "budug": "buruk", "ampas": "tidak berguna", "bangetttt": "banget",
+    "kaya": "seperti", "kayak": "seperti", "cumann": "cuma", "gitu": "seperti itu",
+    "berkalikali": "berkali-kali", "burukdi": "buruk", "kntol": "buruk",
+    "burammm": "buram", "ny": "nya", "dlu": "dulu", "jd": "jadi", "tu": "itu",
+    "sruh": "suruh", "hpnya": "hp", "cacattt": "cacat", "wkwk": "", "anjay": "", "mah": "",
+    "lahhh": "", "sebegitu": "", "anjir": "", "dah": "sudah", "oi": "",
+    "emang": "memang", "dong": "", "uhuy": "", "mantul": "bagus",
+    "wahh": "", "woi": "", "yaa": "iya", "sbnrny": "sebenarnya", "Steady": "stabil",
     "jeleeeek": "jelek", "jelek": "buruk", "buruk": "buruk", "mau": "ingin", "tolong": "mohon", 
     "ya": "iya", "yah": "ya", "gimna": "bagaimana", "gini": "begini", "pas": "saat", 
     "blok": "goblok", "eror": "error", "jeblug": "error", "pake": "pakai", "nggo": "pakai",
@@ -460,27 +487,34 @@ norm = {
     "kak": "kakak", "via": "melalui", "bs": "bisa", "sm": "sama", "lho": "loh", "gaes": "guys", "hbs": "habis",
     "sruh": "suruh", "sblmnya": "sebelumnya", "tambahin": "tambah", "mdh2n": "mudah-mudahan", "kmren": "kemarin", "tengkyu": "terima kasih",
     "hpnya": "hp", "cacattt": "cacat", "maap": "maaf", "numpang": "numpang", "bagussws": "bagus", "disuru": "disuruh",
-    "anehh": "aneh", "aslii": "asli",  "burukdi": "buruk di", "submiteror": "submit error", "parahhhh": "parah",
-    "semacamnya": "sejenisnya", "duit": "uang", "negera": "negara","rapih": "rapi", "bilang": "mengatakan", "standar": "standar", "bermanfaatsemoga": "bermanfaat semoga"
+    "anehh": "aneh", "aslii": "asli",  "burukdi": "buruk di", "submiteror": "submit error", "parahhhh": "parah", "kagal": "tidak", "darting": " darah tinggi",
+    "semacamnya": "sejenisnya", "duit": "uang", "negera": "negara","rapih": "rapi", "bilang": "mengatakan", "standar": "standar", "bermanfaatsemoga": "bermanfaat semoga",
 }
 
+
+# === FUNCTION: Bersihkan Teks ===
 def bersihkan_teks(teks):
     
-    # Normalisasi
+    
     teks = str(teks).lower()
+    
+    # Normalisasi kata berdasarkan kamus
     for kata, pengganti in norm.items():
         teks = re.sub(r'\b' + re.escape(kata) + r'\b', pengganti, teks)
-    # Lowercase
-    #teks = teks.lower()
-    # hapus URL
-    teks = re.sub(r'https?://\S+|www\.\S+', '', teks)  
+
+    # Hapus URL
+    teks = re.sub(r'https?://\S+|www\.\S+', '', teks)
+
     # Hapus karakter non-alfabet
-    teks = re.sub(r'[^a-zA-Z\s]', '', teks)
+    teks = re.sub(r'[^a-z\s]', ' ', teks)
+
     # Hapus spasi berlebih
     teks = re.sub(r'\s+', ' ', teks).strip()
+
     # Tokenisasi dan hapus stopwords
     tokens = teks.split()
     tokens_bersih = [t for t in tokens if t not in stopwords_indonesia]
+
     return ' '.join(tokens_bersih)
 
 # pelabelan menggunakan ML
@@ -656,10 +690,10 @@ def visualisasi():
 
     return render_template('Visualisasi.html', title="Visualisasi", source_data=source_dict, sentiment_data=sentiment_counter)
 
-# --- WOrldCloud
+# --- WordCloud ---
 from wordcloud import WordCloud
 import matplotlib
-matplotlib.use('Agg')  # Tambahkan ini agar tidak pakai GUI
+matplotlib.use('Agg')  # Agar tidak pakai GUI (penting untuk web)
 import matplotlib.pyplot as plt
 import io
 import base64
@@ -669,19 +703,30 @@ import base64
 def wordcloud():
     # Ambil data ulasan dari tabel PreprosesData
     data = db.session.query(PreprosesData.cleaned).all()
-    all_text = ' '.join([row[0] for row in data if row[0]])
 
-# Jika data kosong, tampilkan notifikasi
+
+    # Jika data kosong, tampilkan notifikasi
     if not data or all(not row[0] for row in data):
         flash("Tidak ada data yang tersedia untuk Word Cloud.", "warning")
         return redirect(url_for('visualisasi'))
-    # Buat WordCloud
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_text)
-# Gabungkan semua teks
+
+    # Gabungkan semua teks ulasan yang sudah dibersihkan
     all_text = ' '.join([row[0] for row in data if row[0]])
+
+    # Buat WordCloud dengan parameter tambahan untuk akurasi
+    wordcloud = WordCloud(
+        width=1000,
+        height=500,
+        background_color='white',
+        stopwords=stopwords_indonesia,   # gunakan stopwords kustom kamu
+        max_words=100,
+        collocations=False,              # hindari gabungan kata seperti "fitur aplikasi"
+        colormap='Set2'                  # buat visual lebih menarik
+    ).generate(all_text)
+
     # Simpan gambar ke buffer
     img = io.BytesIO()
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(12, 6))
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     plt.tight_layout(pad=0)
@@ -697,6 +742,11 @@ def wordcloud():
 @app.route('/periode')
 @login_required
 def periode():
+    import matplotlib.dates as mdates
+
+    # Ambil parameter mode (default: harian)
+    mode = request.args.get('mode', 'harian')  # bisa: harian, bulanan, tahunan
+
     # Ambil timestamp dari Ulasan dan label dari PreprosesData dengan JOIN
     rows = db.session.query(Ulasan.timestamp, PreprosesData.label)\
         .join(PreprosesData, PreprosesData.ulasan_id == Ulasan.id)\
@@ -710,31 +760,54 @@ def periode():
         flash("Belum ada data ulasan yang bisa divisualisasikan.", "warning")
         return redirect(url_for('visualisasi'))
 
-    # Buat kolom tanggal (tanpa jam)
-    df['tanggal'] = pd.to_datetime(df['timestamp']).dt.date
+    # Agregasi waktu berdasarkan mode
+    if mode == 'bulanan':
+        df['tanggal'] = pd.to_datetime(df['timestamp']).dt.to_period('M').dt.to_timestamp()
+        judul = 'Distribusi Ulasan per Bulan berdasarkan Sentimen'
+        date_format = '%Y-%m'
+    elif mode == 'tahunan':
+        df['tanggal'] = pd.to_datetime(df['timestamp']).dt.to_period('Y').dt.to_timestamp()
+        judul = 'Jumlah Ulasan per Tahun berdasarkan Sentimen'
+        date_format = '%Y'
+    else:  # default: harian
+        df['tanggal'] = pd.to_datetime(df['timestamp']).dt.date
+        judul = 'Jumlah Ulasan per Hari berdasarkan Sentimen'
+        date_format = '%Y-%m-%d'
 
-    # Hitung jumlah ulasan per tanggal dan label
-    daily_counts = df.groupby(['tanggal', 'label']).size().unstack(fill_value=0)
+    # Hitung jumlah ulasan per waktu dan label
+    counts = df.groupby(['tanggal', 'label']).size().unstack(fill_value=0)
 
     # Plot line chart per kategori sentimen
     plt.figure(figsize=(12, 6))
-    # Mapping label ke warna
+
     warna_sentimen = {
-    'Negatif': 'red',
-    'Netral': 'orange',
-    'Positif': 'green'
+        'Negatif': 'red',
+        'Netral': 'orange',
+        'Positif': 'green'
     }
 
-# Plot tiap sentimen dengan warna sesuai
-    for label in daily_counts.columns:
-        plt.plot(daily_counts.index, daily_counts[label], marker='o',
-             label=label.capitalize(),
-             color=warna_sentimen.get(label, 'blue'))  # default ke biru jika label tidak dikenal
+    for label in counts.columns:
+        plt.plot(counts.index, counts[label], marker='o',
+                 label=label.capitalize(),
+                 color=warna_sentimen.get(label, 'blue'))
 
-    plt.title('Jumlah Ulasan per Hari berdasarkan Sentimen')
-    plt.xlabel('Tanggal')
+    # Menentukan label sumbu X
+    xlabel = 'Tanggal'
+    if mode == 'bulanan':
+        xlabel = 'Bulan'
+    elif mode == 'tahunan':
+        xlabel = 'Tahun'
+
+    plt.title(judul)
+    plt.xlabel(xlabel)
     plt.ylabel('Jumlah Ulasan')
+
+    # Format sumbu X agar label waktu lebih jelas
+    ax = plt.gca()
+    ax.xaxis.set_major_formatter(mdates.DateFormatter(date_format))
+    ax.xaxis.set_major_locator(mdates.AutoDateLocator())
     plt.xticks(rotation=45)
+
     plt.legend(title="Sentimen")
     plt.grid(True)
     plt.tight_layout()
@@ -747,8 +820,6 @@ def periode():
     buf.close()
     plt.close()
 
-    # Kirim ke template
-    
     return render_template('periode.html', title="Periode", plot_url=img_b64)
 
 

@@ -4,8 +4,18 @@
   <div class="text-center">
     <h2 class="mb-4 text-white">Periode Waktu Ulasan Aplikasi</h2>
 
+    <!-- Dropdown untuk memilih mode agregasi -->
+    <form method="get" action="{{ url_for('periode') }}" class="d-flex justify-content-center align-items-center mb-4 gap-2">
+      <label for="mode" class="text-white fw-bold">Tampilkan per:</label>
+      <select name="mode" id="mode" class="form-select w-auto" onchange="this.form.submit()">
+        <option value="harian" {% if request.args.get('mode', 'harian') == 'harian' %}selected{% endif %}>Harian</option>
+        <option value="bulanan" {% if request.args.get('mode') == 'bulanan' %}selected{% endif %}>Bulanan</option>
+        <option value="tahunan" {% if request.args.get('mode') == 'tahunan' %}selected{% endif %}>Tahunan</option>
+      </select>
+    </form>
+
     {% if plot_url %}
-      <img src="data:image/png;base64,{{ plot_url }}" alt="Grafik Jumlah Ulasan per Hari" class="img-fluid rounded shadow" style="max-width: 1000px;">
+      <img src="data:image/png;base64,{{ plot_url }}" alt="Grafik Jumlah Ulasan" class="img-fluid rounded shadow" style="max-width: 1000px;">
     {% else %}
       <div class="alert alert-warning" role="alert">
         Grafik tidak tersedia. Silakan periksa kembali data ulasan.
