@@ -601,7 +601,7 @@ def preprocessing():
     'preprocessing_labeling.html',
     title='Preprocessing dan Labeling Data',
     hasil=hasil,
-    filename=filename if 'filename' in locals() else None
+    filename=filename if 'processing_labeling_result.html' in locals() else None
 )
 # Download preprocessed
 @app.route('/download-preprocessed')

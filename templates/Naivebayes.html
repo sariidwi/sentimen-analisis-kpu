@@ -1,7 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container mt-4">
-    
+
+    <!-- Deskripsi halaman -->
+    <p>
+        Halaman ini digunakan untuk <strong>mengevaluasi kinerja model analisis sentimen</strong> yang dibangun menggunakan algoritma <strong>Multinomial Naive Bayes</strong>.
+        Evaluasi ini bertujuan untuk mengetahui seberapa baik model dalam mengklasifikasikan sentimen ulasan ke dalam tiga kategori: <em>positif</em>, <em>netral</em>, dan <em>negatif</em>.
+    </p>
+    <p>Setelah klik tombol <strong>"Proses Evaluasi"</strong>, sistem akan menampilkan metrik evaluasi berikut:</p>
+    <ul>
+        <li>✅ <strong>Akurasi:</strong> Persentase prediksi yang benar dari seluruh data uji.</li>
+        <li>🎯 <strong>Precision:</strong> Ketepatan model dalam memprediksi suatu kelas, yaitu berapa banyak prediksi positif yang benar dibanding seluruh prediksi positif.</li>
+        <li>🔁 <strong>Recall:</strong> Kemampuan model menangkap semua data positif dari total data positif yang ada.</li>
+        <li>📉 <strong>F1 Score:</strong> Rata-rata harmonis dari precision dan recall. Semakin tinggi, semakin baik.</li>
+        <li>🧮 <strong>Confusion Matrix:</strong> Tabel yang menunjukkan perbandingan antara prediksi model dengan label sebenarnya untuk tiap kelas sentimen.</li>
+    </ul>
+
     <form method="POST">
         <button type="submit" class="btn btn-primary mb-3">Proses Evaluasi</button>
     </form>
@@ -9,7 +23,7 @@
     {% if metrics %}
     <h4>Hasil Evaluasi:</h4>
     <ul>
-        <li><stro  ng>Akurasi:</strong> {{ (metrics.accuracy * 100) | round(2) }}%</li>
+        <li><strong>Akurasi:</strong> {{ (metrics.accuracy * 100) | round(2) }}%</li>
         <li><strong>Precision:</strong> {{ (metrics.precision * 100) | round(2) }}%</li>
         <li><strong>Recall:</strong> {{ (metrics.recall * 100) | round(2) }}%</li>
         <li><strong>F1 Score:</strong> {{ (metrics.f1 * 100) | round(2) }}%</li>

@@ -1,27 +1,71 @@
-{% extends 'layout.html' %}
-{% block content %}
-<h3>Hasil Preprocessing dan Labeling</h3>
-<table class="table table-bordered table-striped table-dark">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Ulasan Asli</th>
-      <th>Ulasan Preprocessing</th>
-      <th>Label</th>
-      <th>Waktu</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for item in hasil %}
-  <tr>
-      <td>{{ loop.index }}</td>
-      <td>{{ item.original }}</td>
-      <td>{{ item.cleaned }}</td>
-      <td>{{ item.label }}</td>
-      <td>{{ item.timestamp }}</td>  {# Tambahkan ini #}
-  </tr>
-  {% endfor %}
-</tbody>
+{% extends "layout.html" %}
 
-</table>
+{% block content %}
+
+  {% if not hasil %}
+  <!-- Deskripsi hanya tampil jika belum ada hasil -->
+  <p>
+    Halaman ini digunakan untuk membersihkan dan menyiapkan data ulasan sebelum dilakukan analisis sentimen lebih lanjut.
+    Proses ini sangat penting untuk memastikan data dalam kondisi bersih, seragam, dan mudah diproses oleh sistem.
+  </p>
+  <ul>
+    <li><strong>Pembersihan data:</strong> menghapus karakter khusus, angka, dan simbol yang tidak perlu.</li>
+    <li><strong>Case Folding:</strong> mengubah semua teks menjadi huruf kecil agar konsisten.</li>
+    <li><strong>Normalisasi:</strong> mengubah kata tidak baku ke bentuk baku (misal: "gk" menjadi "tidak").</li>
+    <li><strong>Stopword Removal:</strong> menghapus kata-kata umum yang tidak memiliki makna penting (seperti: "dan", "yang", "di").</li>
+  </ul>
+  <p>
+    Setelah proses preprocessing selesai, sistem akan memberikan <strong>label sentimen otomatis</strong> berdasarkan model yang telah dilatih.
+  </p>
+
+  <h5 class="mt-4 text-light">🛠️ Cara Melakukan Preprocessing dan Labeling:</h5>
+  <ol>
+    <li>Klik tombol <strong>Proses</strong> di bawah ini untuk memulai proses preprocessing dan pelabelan data.</li>
+    <li>Tunggu hingga sistem menyelesaikan proses pembersihan dan pelabelan sentimen.</li>
+    <li>Klik tombol <strong>Lihat Data</strong> untuk melihat hasil preprocessing dan labeling yang telah dilakukan.</li>
+    <li>Data hasil ini akan digunakan pada proses analisis sentimen selanjutnya.</li>
+  </ol>
+  {% endif %}
+
+  {% if hasil %}
+    <a href="{{ url_for('download_preprocessed') }}" class="btn btn-success mb-3">
+        Download Hasil Preprocessing (CSV)
+    </a>
+  {% endif %}
+
+  {% if not hasil %}
+    <p class="mt-4">Silakan klik <span class="text-warning fw-bold">Proses</span> di bawah ini untuk menampilkan hasil preprocessing dan labeling data!</p>
+    
+    <div class="d-flex gap-2 mt-3">
+      <form method="POST">
+        <button type="submit" class="btn btn-warning">Proses</button>
+      </form>
+      <a href="{{ url_for('preprocessing', action='lihat') }}" class="btn btn-secondary">Lihat Data</a>
+    </div>
+  
+  {% else %}
+    <p class="mt-4">Berikut hasil dari preprocessing dan labeling data:</p>
+    <div class="table-responsive mt-4">
+      <table class="table table-dark table-bordered table-striped">
+        <thead class="table-warning text-dark">
+          <tr>
+            <th>#</th>
+            <th>Ulasan Asli</th>
+            <th>Ulasan Preprocessing</th>
+            <th>Label</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in hasil %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item.original }}</td>
+            <td>{{ item.cleaned }}</td>
+            <td>{{ item.label }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
 {% endblock %}
