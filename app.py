@@ -19,7 +19,7 @@ import io
 import base64
 import matplotlib.pyplot as plt
 from flask import Response
-
+from flask import jsonify
 
 
 
@@ -823,6 +823,22 @@ def periode():
     return render_template('periode.html', title="Periode", plot_url=img_b64)
 
 
+#REST API#
+@app.route('/api/predict', methods=['POST'])
+def api_predict():
+    data = request.get_json() # Mengambil data format JSON
+    review_text = data.get("ulasan", "")
+    
+    # Gunakan logika yang sudah kamu buat
+    cleaned = bersihkan_teks(review_text)
+    prediction = label_ml_cleaned(cleaned)
+    
+    # Kembalikan hanya data mentah, bukan render_template
+    return jsonify({
+        "status": "success",
+        "input": review_text,
+        "sentiment": prediction
+    })
 
 # =========================
 # === END OF ROUTES =======
